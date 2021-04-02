@@ -5,11 +5,12 @@ import express from "express";
 import App from "../src/App";
 
 const app = express();
+app.use(express.static("public"));
 
+// 服务端入口
 app.get("/", (req, res) => {
-  const Page = <App title="开课吧"></App>;
   // 把React组件解析成HTML
-  const content = renderToString(Page);
+  const content = renderToString(App);
   // 字符串模板
   res.send(`
     <html>
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
      </head>
      <body>
       <div id="root">${content}</div>
+      <script src="/bundle.js"></script>
      </body>
     </html>
     `);
