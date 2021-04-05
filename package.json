@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "client": "webpack --config webpack.client.js --watch",
-    "server": "webpack --config webpack.server.js --watch",
-    "start": "nodemon --watch build --exec node \"./build/bundle.js\""
+    "start": "concurrently \"yarn dev:client\" \"yarn dev:server\" \"yarn dev:start\"",
+    "dev:client": "webpack --config webpack.client.js --watch",
+    "dev:server": "webpack --config webpack.server.js --watch",
+    "dev:start": "nodemon --watch build --exec node \"./build/bundle.js\""
   },
   "keywords": [],
   "author": "",
@@ -21,6 +22,7 @@
   },
   "dependencies": {
     "babel-loader": "^8.2.2",
+    "concurrently": "^6.0.0",
     "express": "^4.17.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
