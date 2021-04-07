@@ -3,14 +3,17 @@ import React from "react";
 import { renderToString } from "react-dom/server";
 import express from "express";
 import App from "../src/App";
+import { StaticRouter } from "react-router-dom";
 
 const app = express();
 app.use(express.static("public"));
 
 // 服务端入口
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
   // 把React组件解析成HTML
-  const content = renderToString(App);
+  const content = renderToString(
+    <StaticRouter location={req.url}>{App}</StaticRouter>
+  );
   // 字符串模板
   res.send(`
     <html>
