@@ -4,6 +4,8 @@ import { renderToString } from "react-dom/server";
 import express from "express";
 import App from "../src/App";
 import { StaticRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "../src/store/store";
 
 const app = express();
 app.use(express.static("public"));
@@ -12,7 +14,9 @@ app.use(express.static("public"));
 app.get("*", (req, res) => {
   // 把React组件解析成HTML
   const content = renderToString(
-    <StaticRouter location={req.url}>{App}</StaticRouter>
+    <Provider store={store}>
+      <StaticRouter location={req.url}>{App}</StaticRouter>
+    </Provider>
   );
   // 字符串模板
   res.send(`
